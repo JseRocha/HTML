@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Tempo de Produção Facão!</title>
+	<style>
+body {
+  text-align: center;
+  font-size: 25px;
+  font-family: Arial, sans-serif;
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  background-size: 100%;
+  margin: 0; 
+}
+
+h1 {
+  color: #000000; 
+  text-align: center; 
+}
+.resultado {
+	color: green;
+	font-size: 28px;
+}
+	.rodape {
+	position: fixed;
+	margin-bottom: 0px;
+	
+}
+
+
+
+	
+
+	</style>
+</head>
+<body>
+    <h1 id="titulo">Cálculo de Tempo de Produção do Facão</h1>
+    <form id="formulario">
+        <div class="campo">
+            <label for="Folhas">Quantidade do Pedido:</label><br>	
+            <input type="number" id="pecas" min="1" required>
+        </div>
+        <div class="campo">
+            <label for="comprimento">Comprimento da Peça (mm):</label><br>
+            <input type="number" id="comprimento" min="0.01" step="0.01" required>
+        </div>
+        <div class="campo">
+            <label for="velocidade">Velocidade da Máquina (m/min):</label><br>
+            <input type="number" id="velocidade" min="0.01" step="0.01" required>
+        </div>
+        <div class="campo">
+            <label for="pecasPorCiclo">Folhas por Ciclo:</label><br>
+            <input type="number" id="pecasPorCiclo" min="1" value="1" required>
+        </div>
+        <button type="button" onclick="calcularTempo()">Calcular Tempo</button>
+    </form>
+    <div id="resultado" class="resultado"></div>
+
+    <script>
+        function calcularTempo() {
+            try {
+                // Obter valores dos campos de entrada
+                const pecas = parseInt(document.getElementById('pecas').value);
+                const comprimento = parseFloat(document.getElementById('comprimento').value) / 1000;
+                const velocidade = parseFloat(document.getElementById('velocidade').value) / 60;
+                const pecasPorCiclo = parseInt(document.getElementById('pecasPorCiclo').value);
+
+                // Cálculo do tempo de ciclo (uma peça por ciclo)
+                const tempoCiclo = comprimento / velocidade;
+
+                // Cálculo do tempo total de produção em segundos
+                const tempoTotalSegundos = tempoCiclo * pecas / pecasPorCiclo;
+
+                // Conversão de segundos para horas e minutos
+                const tempoTotalHoras = Math.floor(tempoTotalSegundos / 3600);
+                const tempoTotalMinutos = Math.floor((tempoTotalSegundos % 3600) / 60);
+
+                // Exibir o resultado sem formatação de tempo
+                document.getElementById('resultado').innerHTML = `
+                    O tempo total de produção será de ${tempoTotalHoras} horas e ${tempoTotalMinutos} minutos.
+                `;
+            } catch (error) {
+                console.error(error);
+                document.getElementById('resultado').innerHTML = 'Erro ao calcular o tempo.';
+            }
+        }
+    </script>
+	<div class="rodape"><p>Criado e programado por: José Rocha</p>
+
+	</div>
+</body>
+</html>
